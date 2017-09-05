@@ -36,3 +36,21 @@ function consumer_image_styles_entity_base_field_info(EntityTypeInterface $entit
   }
   return $fields;
 }
+
+/**
+ * Implements hook_consumers_list_alter().
+ */
+function consumer_image_styles_consumers_list_alter(&$data, $context) {
+  if ($context['type'] === 'header') {
+    $data['image_styles'] = t('Image Styles');
+  }
+  else if ($context['type'] === 'row') {
+    $entity = $context['entity'];
+    $data['image_styles'] = [
+      'data' => ['#theme' => 'item_list', '#items' => []],
+    ];
+    foreach ($entity->get('image_styles') as $image_style) {
+      $data['image_styles']['data']['#items'][] = $image_style->entity->label();
+    }
+  }
+}
