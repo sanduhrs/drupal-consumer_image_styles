@@ -1,21 +1,41 @@
 <?php
 
-/**
- * @file
- * Module implementation file.
- */
+namespace Drupal\consumer_image_styles\Plugin\Consumers\Type;
 
-use Drupal\Core\Entity\EntityTypeInterface;
+use Drupal\consumers\ConsumerTypeInterface;
+use Drupal\consumers\Entity\Consumer;
 use Drupal\Core\Field\BaseFieldDefinition;
 use Drupal\Core\Field\FieldStorageDefinitionInterface;
+use Drupal\Core\Plugin\PluginBase;
 use Drupal\Core\StringTranslation\TranslatableMarkup;
 
 /**
- * Implements hook_entity_base_field_info().
+ * @ConsumerType(
+ *   id = "image_style",
+ *   label = @Translation("Image style"),
+ *   hasSummary = true,
+ * )
  */
-function consumer_image_styles_entity_base_field_info(EntityTypeInterface $entity_type) {
-  $fields = [];
-  if ($entity_type->id() == 'consumer') {
+class ImageStyle extends PluginBase implements ConsumerTypeInterface {
+
+  /**
+   * {@inheritdoc}
+   */
+  public function summary(Consumer $entity) {
+    $build = [
+      '#theme' => 'item_list', '#items' => [],
+    ];
+    foreach ($entity->get('image_styles') as $image_style) {
+      $build['#items'][] = $image_style->entity->label();
+    }
+    return $build;
+  }
+
+  /**
+   * {@inheritdoc}
+   */
+  public function storageFields() {
+    $fields = [];
     $fields['image_styles'] = BaseFieldDefinition::create('entity_reference')
       ->setLabel(new TranslatableMarkup('Image Styles'))
       ->setDescription(new TranslatableMarkup('Image styles this consumer will need. All images will provide all the variants selected here.'))
@@ -33,24 +53,8 @@ function consumer_image_styles_entity_base_field_info(EntityTypeInterface $entit
         'type' => 'options_buttons',
         'weight' => 5,
       ]);
+    return $fields;
   }
-  return $fields;
-}
 
-/**
- * Implements hook_consumers_list_alter().
- */
-function consumer_image_styles_consumers_list_alter(&$data, $context) {
-  if ($context['type'] === 'header') {
-    $data['image_styles'] = t('Image Styles');
-  }
-  else if ($context['type'] === 'row') {
-    $entity = $context['entity'];
-    $data['image_styles'] = [
-      'data' => ['#theme' => 'item_list', '#items' => []],
-    ];
-    foreach ($entity->get('image_styles') as $image_style) {
-      $data['image_styles']['data']['#items'][] = $image_style->entity->label();
-    }
-  }
+
 }
