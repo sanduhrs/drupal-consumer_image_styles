@@ -29,6 +29,7 @@ class ImageNormalizerValue implements ValueExtractorInterface, RefinableCacheabl
   public function __construct(ValueExtractorInterface $variants, EntityNormalizerValue $subject) {
     $this->subject = $subject;
     $this->variants = $variants;
+    $this->addCacheableDependency($variants);
   }
 
   /**
