@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\Tests\jsonapi\Functional;
+namespace Drupal\Tests\consumer_image_styles\Functional;
 
 use Drupal\Component\Serialization\Json;
 use Drupal\consumers\Entity\Consumer;
@@ -13,7 +13,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
- * @group jsonapi
+ * @group consumer_image_styles
  */
 class ConsumerImageSylesFunctionalTest extends BrowserTestBase {
 
