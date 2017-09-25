@@ -135,7 +135,7 @@ class ImageEntityNormalizer extends ContentEntityNormalizer {
       $urls = array_map(function ($image_style_id) use ($image_style_storage, $uri) {
         /** @var \Drupal\image\Entity\ImageStyle $image_style */
         $image_style = $image_style_storage->load($image_style_id);
-        return file_url_transform_relative($image_style->buildUrl($uri));
+        return file_create_url($image_style->buildUrl($uri));
       }, $image_style_ids);
       $value = array_combine($image_style_ids, $urls);
       $output = new ImageVariantItemNormalizerValue($value);

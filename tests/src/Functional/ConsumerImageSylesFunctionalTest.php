@@ -148,8 +148,8 @@ class ConsumerImageSylesFunctionalTest extends BrowserTestBase {
     $output = Json::decode($raw);
     $this->assertSession()->statusCodeEquals(200);
     $derivatives = $output['included'][0]['meta']['derivatives'];
-    $this->assertContains('/files/styles/foo/public/', $derivatives['foo']);
-    $this->assertContains('/files/styles/bar/public/', $derivatives['bar']);
+    $this->assertContains(file_create_url('public://styles/foo/public/'), $derivatives['foo']);
+    $this->assertContains(file_create_url('public://styles/bar/public/'), $derivatives['bar']);
     $this->assertContains('itok=', $derivatives['foo']);
     $this->assertContains('itok=', $derivatives['bar']);
 
