@@ -3,4 +3,4 @@ services:
     class: Drupal\consumer_image_styles\Normalizer\ImageEntityNormalizer
     arguments: ['@jsonapi.link_manager', '@jsonapi.resource_type.repository', '@entity_type.manager', '@consumer.negotiator']
     tags:
-      - { name: normalizer, priority: 24 }
+      - { name: jsonapi_normalizer_do_not_use_removal_imminent, priority: 24 }
