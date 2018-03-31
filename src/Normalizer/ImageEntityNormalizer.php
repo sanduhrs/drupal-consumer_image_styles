@@ -8,6 +8,7 @@ use Drupal\consumers\Negotiator;
 use Drupal\Core\Entity\EntityInterface;
 use Drupal\Core\Entity\EntityTypeManagerInterface;
 use Drupal\file\Entity\File;
+use Drupal\Core\Cache\CacheableMetadata;
 use Drupal\jsonapi\LinkManager\LinkManager;
 use Drupal\jsonapi\Normalizer\ContentEntityNormalizer;
 use Drupal\jsonapi\Normalizer\Value\NullFieldNormalizerValue;
@@ -124,7 +125,6 @@ class ImageEntityNormalizer extends ContentEntityNormalizer {
   protected function buildVariantValues(EntityInterface $entity, array $context = []) {
     $request = empty($context['request']) ? NULL : $context['request'];
     $consumer = $this->consumerNegotiator->negotiateFromRequest($request);
-    $output = new NullFieldNormalizerValue();
     if ($consumer) {
       // Get the image styles from the consumer.
       $image_style_ids = array_map(function ($field_value) {
@@ -138,11 +138,11 @@ class ImageEntityNormalizer extends ContentEntityNormalizer {
         return file_create_url($image_style->buildUrl($uri));
       }, $image_style_ids);
       $value = array_combine($image_style_ids, $urls);
-      $output = new ImageVariantItemNormalizerValue($value);
-      $output->addCacheableDependency($consumer);
+      return new ImageVariantItemNormalizerValue($value, new CacheableMetadata());
     }
 
-    return $output;
+    $access = $entity->access('view', $context['account'], TRUE);
+    return new NullFieldNormalizerValue($access, 'attributes');
   }
 
 }
