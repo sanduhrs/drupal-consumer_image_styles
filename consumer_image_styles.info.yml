@@ -6,4 +6,4 @@ package: Web Services
 dependencies:
   - image
   - consumers
-  - jsonapi (>=1.14)
+  - jsonapi
