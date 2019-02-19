@@ -4,6 +4,7 @@ namespace Drupal\consumer_image_styles;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceProviderBase;
+use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Replace the resource type repository for our own configurable version.
@@ -14,10 +15,8 @@ class ConsumerImageStylesServiceProvider extends ServiceProviderBase {
    * {@inheritdoc}
    */
   public function alter(ContainerBuilder $container) {
-    if ($container->has('serializer.normalizer.entity.jsonapi')) {
-      $container->getDefinition('serializer.normalizer.entity.jsonapi')
-        ->setPrivate(TRUE)
-        ->clearTags();
+    if ($container->has('serializer.normalizer.link_collection.jsonapi')) {
+      $container->getDefinition('serializer.normalizer.link_collection.jsonapi')->clearTags();
     }
   }
 
