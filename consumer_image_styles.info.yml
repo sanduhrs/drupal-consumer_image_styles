@@ -6,5 +6,5 @@ package: Web services
 dependencies:
   - drupal:image
   - consumers:consumers
-  - jsonapi:jsonapi
+  - jsonapi
   - jsonapi_extras:jsonapi_extras

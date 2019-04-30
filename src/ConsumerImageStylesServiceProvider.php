@@ -4,7 +4,6 @@ namespace Drupal\consumer_image_styles;
 
 use Drupal\Core\DependencyInjection\ContainerBuilder;
 use Drupal\Core\DependencyInjection\ServiceProviderBase;
-use Symfony\Component\DependencyInjection\Reference;
 
 /**
  * Replace the resource type repository for our own configurable version.
