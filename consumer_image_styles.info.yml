@@ -1,7 +1,7 @@
 name: Consumer Image Styles
 type: module
 description: Attach image styles to a given consumer.
-core: 8.x
+core_version_requirement: ^8 || ^9
 package: Web services
 dependencies:
   - drupal:image
